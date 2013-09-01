@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/niil/workspace/language-analyzer'
+let g:netrw_dirhist_2='/home/niil/workspace/language-analyzer/.git'
+let g:netrw_dirhist_3='/home/niil/workspace/language-analyzer/.git/hooks'
+let g:netrw_dirhist_4='/home/niil/.vim'

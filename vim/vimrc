@@ -82,3 +82,17 @@ set backspace=2
 set nocompatible
 set ruler
 set showcmd
+
+function CommentUncomment()
+	execute "normal 0"
+	execute "normal qc"
+	if getline(".")[col(".") - 1] == '#'
+		execute "normal x"
+	else
+		execute "normal i#"
+	endif
+	execute "normal q"
+	execute "'<,'> normal @c"
+endfunction
+
+vmap <C-h> :call CommentUncomment()<CR>

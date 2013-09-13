@@ -86,12 +86,25 @@ set showcmd
 nmap v V
 
 function CommentUncomment()
+	let fileName = expand("%:t")
+	if fileName =~ "\.py" || fileName =~ "\.sh" || fileName =~ "\.rb"
+		let comChr = '#'
+	elseif fileName =~ "\.cpp"
+		let comChr = '//'
+	else
+		let comChr = ''
+	endif
+
 	execute "normal 0"
 	execute "normal qc"
-	if getline(".")[col(".") - 1] == '#'
-		execute "normal x"
+	if getline(".")[col(".") - 1: col('.') - 2 + strlen(comChr)] == comChr
+		let i = 0
+		while i < strlen(comChr)
+			execute "normal x"
+			let i += 1
+		endwhile
 	else
-		execute "normal i#"
+		execute "normal i".comChr
 	endif
 	execute "normal q"
 	execute "'<,'> normal @c"

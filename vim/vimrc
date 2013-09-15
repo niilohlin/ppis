@@ -84,6 +84,8 @@ set ruler
 set showcmd
 
 nmap v V
+nmap p ]p
+nmap P [p
 
 function CommentUncomment()
 	let fileName = expand("%:t")
@@ -91,6 +93,8 @@ function CommentUncomment()
 		let comChr = '#'
 	elseif fileName =~ "\.cpp"
 		let comChr = '//'
+	elseif fileName =~ "\.tex"
+		let comChr = '%'
 	else
 		let comChr = ''
 	endif

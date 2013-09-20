@@ -38,6 +38,7 @@ set showcmd		" Show (partial) command in status line.
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
+set smartindent
 set incsearch		" Incremental search
 set autowrite		" Automatically save before commands like :next and :make
 set hidden             " Hide buffers when they are abandoned
@@ -86,6 +87,14 @@ set showcmd
 nmap v V
 nmap p ]p
 nmap P [p
+nmap <C-i> i_<Esc>r
+
+imap <C-k> <Esc>ddkPi
+imap <C-j> <Esc>ddpi
+nmap <C-k> ddkP
+nmap <C-j> ddp
+vmap <C-k> dkP
+vmap <C-j> dp
 
 function CommentUncomment()
 	let fileName = expand("%:t")
@@ -93,8 +102,6 @@ function CommentUncomment()
 		let comChr = '#'
 	elseif fileName =~ "\.cpp"
 		let comChr = '//'
-	elseif fileName =~ "\.tex"
-		let comChr = '%'
 	else
 		let comChr = ''
 	endif
@@ -115,5 +122,50 @@ function CommentUncomment()
 endfunction
 
 vmap <C-h> :call CommentUncomment()<CR>
+
+function! Mirror(dict)
+	for [key, value] in items(a:dict)
+		let a:dict[value] = key
+	endfor
+	return a:dict
+endfunction
+
+function S(number)
+	return submatch(a:number)
+endfunction
+function! SwapWords(dict, ...)
+	let words = keys(a:dict) + values(a:dict)
+	let words = map(words, 'escape(v:val, "|")')
+	if(a:0 == 1)
+		let delimiter = a:1
+	else
+		let delimiter = '/'
+	endif
+	let pattern = '\v(' . join(words, '|') . ')'
+	exe '%s' . delimiter . pattern . delimiter
+				\ . '\=' . string(Mirror(a:dict)) . '[S(0)]'
+				\ . delimiter. 'g'
+endfunction
+
+function! MakeTag()
+" Copy the tag
+	exe 'normal yiw' 
+" Insert opening bracket
+	exe 'normal i<'  
+"Insert closing bracket
+	exe 'normal Ea>'  
+" Insert endb
+	exe 'normal a</' 
+" put tag and insert >
+	exe 'normal pa>' 
+" goto opening tag >
+	exe 'normal %h'   
+endfunction
+
+nmap <C-o> :call MakeTag()<CR>
+imap <C-o> <Esc>:call MakeTag()<CR>a
+
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
+
+execute pathogen#infect()

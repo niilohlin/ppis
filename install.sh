@@ -17,9 +17,9 @@ read username
 
 
 #two parralell list containing the avalable programs to install
-programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential" "keepassx" "gparted" "tmux")
+programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential" "keepassx" "gparted" "tmux" "inconsolata")
 # true indicates that it will be installed
-installs=(true true true true true true true false true true false true true true)
+installs=(true true true true true true true false true true false true true true true)
 
 while [ true ]
 do

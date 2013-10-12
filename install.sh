@@ -50,18 +50,6 @@ do
 	fi
 done
 
-# install the programs
-for ((i=0; i<${#programs[@]-1}; i++))
-do
-	if [[ ${installs[$i]} == true ]];then
-		echo "installing ${programs[$i]}"
-		# send expands to
-		# yes | apt-get install vim
-		# for example
-		yes | $pmin ${programs[$i]}
-	fi
-	echo -en "\ec"
-done
 
 # same here, but with preconfigured rc files and .conf files
 configures=("vim" "urxvt" "zsh" "git" "tmux" "keyboard layout")
@@ -92,23 +80,37 @@ do
 	fi
 done
 
+# install the programs
+for ((i=0; i<${#programs[@]-1}; i++))
+do
+	if [[ ${installs[$i]} == true ]];then
+		echo "installing ${programs[$i]}"
+		# send expands to
+		# yes | apt-get install vim
+		# for example
+		yes | $pmin ${programs[$i]}
+	fi
+	echo -en "\ec"
+done
+
+# and configure that shit
 for ((i=0; i<${#configures[@]-1}; i++))
 do
 	# I have no idea of how to do switch case
 	# and it's not important
 	if [[ ${customs[$i]} == true ]];then
 		echo "configuring ${configures[$i]}"
-		if [[ ${configures} -eq "vim" ]];then
+		if [[ ${configures[$i]} -eq "vim" ]];then
 			cp -r ./vim /home/$username/.vim
 		fi
-		if [[ ${configures} -eq "urxvt" ]];then
+		if [[ ${configures[$i]} -eq "urxvt" ]];then
 			cp ./Xdefaults /home/$username/.Xdefaults
 			cp ./Xresources /home/$username/.Xresources
 		fi
-		if [[ ${configures} -eq "zsh" ]];then
+		if [[ ${configures[$i]} -eq "zsh" ]];then
 			cp ./zshrc /home/$username/.zshrc
 		fi
-		if [[ ${configures} -eq "tmux" ]];then
+		if [[ ${configures[$i]} -eq "tmux" ]];then
 			cp ./tmux.conf /home/$username/.tmux.conf
 		fi
 		if [[ ${configures} -eq "git" ]];then
@@ -116,7 +118,7 @@ do
 			git config --global user.email niil.94@hotmail.com
 			git config --global core.editor vim
 		fi
-		if [[ ${configures} -eq "keyboard layout" ]];then
+		if [[ ${configures[$i]} -eq "keyboard layout" ]];then
 			echo "backing up old keymap symbols"
 			cp -r /usr/share/X11/xkb/symbols /usr/share/X11/xkb/symbols.bak
 			echo "copying custom keymap symbols"

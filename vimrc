@@ -1,39 +1,17 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
-
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-"set compatible
-
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
 if has("syntax")
   syntax on
 endif
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
+
 if has("autocmd")
   filetype plugin indent on
 endif
 
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
 set showcmd		" Show (partial) command in status line.
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
@@ -55,13 +33,14 @@ endif
 syntax enable
 set background=dark
 colorscheme solarized
+set clipboard=unnamed
 
-"imap hh <Esc>
-"imap <C-BS> <C-w>
+imap hh <Esc>
+imap <C-BS> <C-w>
 set whichwrap+=<,>,[,]
 set tabstop=4
 set shiftwidth=4
-"set expandtab
+set expandtab
 set softtabstop=4
 
 "noremap <Up> <NOP>
@@ -83,18 +62,29 @@ set backspace=2
 set nocompatible
 set ruler
 set showcmd
+set colorcolumn=80
 
-nmap v V
-nmap p ]p
-nmap P [p
-nmap <C-i> i_<Esc>r
+nnoremap v V
+nnoremap V v
+nnoremap p ]p
+nnoremap P [p
+nnoremap <C-i> i_<Esc>r
 
-imap <C-k> <Esc>ddkPi
-imap <C-j> <Esc>ddpi
-nmap <C-k> ddkP
-nmap <C-j> ddp
-vmap <C-k> dkP
-vmap <C-j> dp
+inoremap <C-k> <Esc>ddkPi
+inoremap <C-j> <Esc>ddpi
+nnoremap <C-k> ddkP
+nnoremap <C-j> ddp
+vnoremap <C-k> dkP
+vnoremap <C-j> dp
+ 
+" Fix so that it inserts a arbitrary character and removes it so that 
+" the indentation is persistent
+inoremap <CR> <CR>a<BS>
+nnoremap o oa<BS>
+nnoremap O Oa<BS>
+
+vnoremap < <gv
+vnoremap > >gv
 
 function CommentUncomment()
 	let fileName = expand("%:t")
@@ -102,6 +92,8 @@ function CommentUncomment()
 		let comChr = '#'
 	elseif fileName =~ "\.cpp"
 		let comChr = '//'
+    elseif fileName =~ "\.vim"
+        let comChr = '" '
 	else
 		let comChr = ''
 	endif
@@ -159,13 +151,93 @@ function! MakeTag()
 " put tag and insert >
 	exe 'normal pa>' 
 " goto opening tag >
-	exe 'normal %h'   
+	exe 'normal F>'   
 endfunction
 
-nmap <C-o> :call MakeTag()<CR>
-imap <C-o> <Esc>:call MakeTag()<CR>a
+nmap gt :call MakeTag()<CR>
+nmap gT :call MakeTag()<CR>a<CR><Esc>k
+"imap <C-o> <Esc>:call MakeTag()<CR>a
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+function! Stenography()
+	inoremap prs ()
+	inoremap prn (
+	inoremap prt )
+	inoremap brks []
+	inoremap brkn [
+	inoremap brkt ]
+	inoremap crks {}
+	inoremap crkn {
+	inoremap crkt }
+	inoremap ( <NOP>
+	inoremap ) <NOP>
+	inoremap [ <NOP>
+	inoremap ] <NOP>
+	inoremap { <NOP>
+	inoremap } <NOP>
+	inoremap cln :
+	inoremap scln ;
+	inoremap : <NOP>
+	inoremap ; <NOP>
+"	inoremap hrz |
+	inoremap divby /
+"	inoremap blsh \\
+"	inoremap | <NOP>
+"	inoremap / <NOP>
+	inoremap \ <NOP>
+	inoremap wht ?
+	inoremap tams *
+	inoremap snbl @
+	inoremap @ <NOP>
+	inoremap ? <NOP>
+	inoremap * <NOP>
+	inoremap plus +
+	inoremap minus -
+	inoremap + <NOP>
+	inoremap - <NOP>
+	inoremap eql =
+	inoremap = <NOP>
+	inoremap undl _
+	inoremap _ <NOP>
+	
+	inoremap one 1
+	inoremap two 2
+	inoremap three 3
+	inoremap four 4
+	inoremap five 5
+	inoremap six 6
+	inoremap svn 7
+	inoremap eit 8
+	inoremap nine 9
+	inoremap zro 0
+	inoremap 1 <NOP>
+	inoremap 2 <NOP>
+	inoremap 3 <NOP>
+	inoremap 4 <NOP>
+	inoremap 5 <NOP>
+	inoremap 6 <NOP>
+	inoremap 7 <NOP>
+	inoremap 8 <NOP>
+	inoremap 9 <NOP>
+	inoremap 0 <NOP>
+	
+	inoremap amersnd &
+	inoremap prcnt %
+	inoremap tilde ~
+	inoremap dollar $
+	inoremap htag #
+	inoremap bng !
+	inoremap btick `
+	inoremap & <NOP>
+	inoremap % <NOP>
+	inoremap ~ <NOP>
+	inoremap $ <NOP>
+	inoremap # <NOP>
+	inoremap ! <NOP>
+	inoremap ` <NOP>
+endfunction
+
+" exe Stenography()
 
 execute pathogen#infect()

@@ -70,6 +70,8 @@ function clock {
 }
 
 alias cd='mycd'
+alias lynx='lynx --accept_all_cookies'
+alias no='ls'
 
 
 set -o vi
@@ -77,7 +79,8 @@ set keymap vi-insert
 # bind -m vi-instert "\C-l":clear-screen
 
 # prompt
-PS1='[%n@%M]%~ %# '
+autoload -U colors && colors
+PS1="%{%F{red}%}%n%{%f%}@%{%F{blue}%}%m %{%F{yellow}%}%~ %{$%f%}%  "
 BROWSER=/usr/bin/xdg-open
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

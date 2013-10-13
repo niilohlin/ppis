@@ -579,12 +579,15 @@ xkb_symbols "dvp" {
     key <AD01> { [ semicolon,       colon,          dead_diaeresis              ] };
     key <AD02> { [ comma,           less,           guillemotleft               ] };
     key <AD03> { [ period,          greater,        guillemotright              ] };
-    key <AD04> { [ p,               P,              paragraph,       section    ] };
-    key <AD05> { [ y,               Y,              udiaeresis,      Udiaeresis ] };
+    key <AD04> { [ p,               P,              paragraph,       section    ] }; 
+// changed to L
+    key <AD05> { [ l,               L,              udiaeresis,      Udiaeresis ] };
 
     // upper row, right side
     key <AD08> { [ c,               C,              ccedilla,        Ccedilla   ] };
     key <AD09> { [ r,               R,              registered,      trademark  ] };
+//moved p
+    key <AD10> { [ y,               Y                                           ] }; 
     key <AD11> { [ slash,           question,       questiondown                ] };
     key <AD12> { [ at,              asciicircum,    dead_circumflex, dead_caron ] };
 

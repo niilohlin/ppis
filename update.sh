@@ -3,9 +3,9 @@
 
 
 # same here, but with preconfigured rc files and .conf files
-configures=("vim" "urxvt" "zsh" "tmux" "keyboard layout")
+configures=("vim" "urxvt" "zsh" "tmux" 'keyboard layout')
 customs=(true true true true true)
-username=$(longame)
+username=$(logname)
 
 while [ true ]
 do
@@ -39,20 +39,20 @@ do
 	# and it's not important
 	if [[ ${customs[$i]} == true ]];then
 		echo "configuring ${configures[$i]}"
-		if [[ ${configures[$i]} -eq "vim" ]];then
+		if [[ ${configures[$i]} == "vim" ]];then
 			cp /home/$username/.vim/vimrc ./vimrc 
 		fi
-		if [[ ${configures[$i]} -eq "urxvt" ]];then
+		if [[ ${configures[$i]} == "urxvt" ]];then
 			cp /home/$username/.Xdefaults ./Xdefaults 
 			cp /home/$username/.Xresources ./Xresources 
 		fi
-		if [[ ${configures[$i]} -eq "zsh" ]];then
+		if [[ ${configures[$i]} == "zsh" ]];then
 			cp /home/$username/.zshrc ./zshrc 
 		fi
-		if [[ ${configures[$i]} -eq "tmux" ]];then
+		if [[ ${configures[$i]} == "tmux" ]];then
 			cp /home/$username/.tmux.conf ./tmux.conf 
 		fi
-		if [[ ${configures[$i]} -eq "keyboard layout" ]];then
+		if [[ ${configures[$i]} == "keyboard layout" ]];then
 			cp /usr/share/X11/xkb/symbols/us ./us 
 		fi
 	fi

@@ -3,10 +3,10 @@ URxvt*depth:	32
 #URxvt*foreground:	green
 
 
-URxvt*font: xft:Monospace:pixelsize=21
+URxvt*font: xft:inconsolata:pixelsize=25
 URxvt*scrollBar:	false
 URxvt*saveLines:500
-URxvt*geometry:	100x31
+URxvt*geometry:	100x28
 URxvt*intensityStyles:	false
 
 *background:              #fdf6e3

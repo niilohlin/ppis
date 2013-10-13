@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if root
-if [[$EUID -ne 0]]; then
+if [[ $EUID -ne 0 ]]; then
 	echo "You must be root to install stuff" 1>&2
 	exit 100
 fi
@@ -9,15 +9,21 @@ fi
 os=$(lsb_release -s -d)
 if echo $os | grep -i --quiet 'Debian\|Ubuntu' ;then
     pmin='apt-get install'
+    pmup='apt-get update'
 elif echo $os | grep -i --quiet 'OpenSuSE\|RedHat\|Fedora'  ;then
     pmin='yum install'
+    pmup='yum update'
 else
     # installation command, e.g. "apt-get install "
     echo -en "\ec"
     echo -n "enter your installation command :> "
     read pmin
+    echo -n "enter your update command :> "
+    read pmup
 fi
 username=$(logname)
+$(pmup)
+
 
 #two parralell list containing the avalable programs to install
 programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium")
@@ -84,10 +90,12 @@ do
 done
 
 # install the programs
+
 for ((i=0; i<${#programs[@]-1}; i++))
 do
 	if [[ ${installs[$i]} == true ]];then
-		echo "installing ${programs[$i]}"
+		echo -e "\033[1;33minstalling ${programs[$i]}"
+        tput sgr0
 		# send expands to
 		# yes | apt-get install vim
 		# for example
@@ -103,25 +111,25 @@ do
 	# and it's not important
 	if [[ ${customs[$i]} == true ]];then
 		echo "configuring ${configures[$i]}"
-		if [[ ${configures[$i]} -eq "vim" ]];then
+		if [[ ${configures[$i]} == "vim" ]];then
 			cp -r ./vimrc /home/$username/.vim/vimrc
 		fi
-		if [[ ${configures[$i]} -eq "urxvt" ]];then
+		if [[ ${configures[$i]} == "urxvt" ]];then
 			cp ./Xdefaults /home/$username/.Xdefaults
 			cp ./Xresources /home/$username/.Xresources
 		fi
-		if [[ ${configures[$i]} -eq "zsh" ]];then
+		if [[ ${configures[$i]} == "zsh" ]];then
 			cp ./zshrc /home/$username/.zshrc
 		fi
-		if [[ ${configures[$i]} -eq "tmux" ]];then
+		if [[ ${configures[$i]} == "tmux" ]];then
 			cp ./tmux.conf /home/$username/.tmux.conf
 		fi
-		if [[ ${configures} -eq "git" ]];then
+		if [[ ${configures} == "git" ]];then
 			git config --global user.name "Niil Öhlin"
 			git config --global user.email niil.94@hotmail.com
 			git config --global core.editor vim
 		fi
-		if [[ ${configures[$i]} -eq "keyboard layout" ]];then
+		if [[ ${configures[$i]} == "keyboard layout" ]];then
 			echo "backing up old keymap symbols"
 			cp -r /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/us.bak
 			echo "copying custom keymap symbols"

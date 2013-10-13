@@ -26,9 +26,9 @@ $(pmup)
 
 
 #two parralell list containing the avalable programs to install
-programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium")
+programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium" "arandr")
 # true indicates that it will be installed
-installs=(true true true true true true true false true true false true true true true true)
+installs=(true true true true true true true false true true false true true true true true true)
 
 while [ true ]
 do

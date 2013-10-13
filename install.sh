@@ -82,7 +82,6 @@ do
 		customs[$input]=true
 	fi
 done
-exit 0
 
 # install the programs
 for ((i=0; i<${#programs[@]-1}; i++))

@@ -6,15 +6,18 @@ if [[$EUID -ne 0]]; then
 	exit 100
 fi
 
-
-# installation command, e.g. "apt-get install "
-echo -en "\ec"
-echo -n "enter your installation command :> "
-read pmin
-# useraname e.g. "niil"
-echo -n "enter your username :> "
-read username
-
+os=$(lsb_release -s -d)
+if echo $os | grep -i --quiet 'Debian\|Ubuntu' ;then
+    pmin='apt-get install'
+elif echo $os | grep -i --quiet 'OpenSuSE\|RedHat\|Fedora'  ;then
+    pmin='yum install'
+else
+    # installation command, e.g. "apt-get install "
+    echo -en "\ec"
+    echo -n "enter your installation command :> "
+    read pmin
+fi
+username=$(whoami)
 
 #two parralell list containing the avalable programs to install
 programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential" "keepassx" "gparted" "tmux" "inconsolata")
@@ -79,6 +82,7 @@ do
 		customs[$input]=true
 	fi
 done
+exit 0
 
 # install the programs
 for ((i=0; i<${#programs[@]-1}; i++))

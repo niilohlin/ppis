@@ -20,9 +20,9 @@ fi
 username=$(whoami)
 
 #two parralell list containing the avalable programs to install
-programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential" "keepassx" "gparted" "tmux" "inconsolata")
+programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium")
 # true indicates that it will be installed
-installs=(true true true true true true true false true true false true true true true)
+installs=(true true true true true true true false true true false true true true true true)
 
 while [ true ]
 do
@@ -105,7 +105,7 @@ do
 	if [[ ${customs[$i]} == true ]];then
 		echo "configuring ${configures[$i]}"
 		if [[ ${configures[$i]} -eq "vim" ]];then
-			cp -r ./vim /home/$username/.vim
+			cp -r ./vimrc /home/$username/.vim/vimrc
 		fi
 		if [[ ${configures[$i]} -eq "urxvt" ]];then
 			cp ./Xdefaults /home/$username/.Xdefaults
@@ -124,9 +124,9 @@ do
 		fi
 		if [[ ${configures[$i]} -eq "keyboard layout" ]];then
 			echo "backing up old keymap symbols"
-			cp -r /usr/share/X11/xkb/symbols /usr/share/X11/xkb/symbols.bak
+			cp -r /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/us.bak
 			echo "copying custom keymap symbols"
-			cp -r ./symbols /usr/share/X11/xkb/symbols
+			cp -r ./us /usr/share/X11/xkb/symbols/us
 		fi
 	fi
 done

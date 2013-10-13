@@ -5,7 +5,7 @@
 # same here, but with preconfigured rc files and .conf files
 configures=("vim" "urxvt" "zsh" "tmux" "keyboard layout")
 customs=(true true true true true)
-username=$(whoami)
+username=$(longame)
 
 while [ true ]
 do

@@ -17,7 +17,7 @@ else
     echo -n "enter your installation command :> "
     read pmin
 fi
-username=$(whoami)
+username=$(logname)
 
 #two parralell list containing the avalable programs to install
 programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium")

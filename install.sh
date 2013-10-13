@@ -13,6 +13,9 @@ if echo $os | grep -i --quiet 'Debian\|Ubuntu' ;then
 elif echo $os | grep -i --quiet 'OpenSuSE\|RedHat\|Fedora'  ;then
     pmin='yum install'
     pmup='yum update'
+elif echo $os |grep -i --quiet 'Arch' ;then
+    pmin='pacman -Syu'
+    pmup='pacman -Syy'
 else
     # installation command, e.g. "apt-get install "
     echo -en "\ec"
@@ -63,6 +66,7 @@ done
 # same here, but with preconfigured rc files and .conf files
 configures=("vim" "urxvt" "zsh" "git" "tmux" "keyboard layout")
 customs=(true true true true true true)
+updates=(true true true true true true)
 
 while [ true ]
 do
@@ -89,6 +93,34 @@ do
 	fi
 done
 
+#prompt for updates
+
+while [ true ]
+do
+    echo -en "\ec"
+    echo "Please enter what you want to automaticallly update"
+    echo -e "-1 \t [ ] continue/run"
+    for ((i=0; i<${#configures[@]-1}; i++))
+    do
+        if [[ ${updates[$i]} == true ]];then
+            printf "%s\t %s %s\n" "$i" "[*]" "${configures[$i]}" 
+        else
+            printf "%s\t %s %s\n" "$i" "[ ]" "${configures[$i]}" 
+        fi
+    done
+    echo -n "configure number :> "
+    read input
+    if [[ $input -eq -1 ]]; then
+        break
+    fi
+    if [[ ${updates[$input]} == true ]];then
+        updates[$input]=false
+    else
+        updates[$input]=true
+    fi
+done
+
+
 # install the programs
 
 for ((i=0; i<${#programs[@]-1}; i++))
@@ -113,23 +145,18 @@ do
 		echo "configuring ${configures[$i]}"
 		if [[ ${configures[$i]} == "vim" ]];then
 			cp -r ./vimrc /home/$username/.vim/vimrc
-		fi
-		if [[ ${configures[$i]} == "urxvt" ]];then
+		elif [[ ${configures[$i]} == "urxvt" ]];then
 			cp ./Xdefaults /home/$username/.Xdefaults
 			cp ./Xresources /home/$username/.Xresources
-		fi
-		if [[ ${configures[$i]} == "zsh" ]];then
+		elif [[ ${configures[$i]} == "zsh" ]];then
 			cp ./zshrc /home/$username/.zshrc
-		fi
-		if [[ ${configures[$i]} == "tmux" ]];then
+		elif [[ ${configures[$i]} == "tmux" ]];then
 			cp ./tmux.conf /home/$username/.tmux.conf
-		fi
-		if [[ ${configures} == "git" ]];then
+		elif [[ ${configures} == "git" ]];then
 			git config --global user.name "Niil Öhlin"
 			git config --global user.email niil.94@hotmail.com
 			git config --global core.editor vim
-		fi
-		if [[ ${configures[$i]} == "keyboard layout" ]];then
+		elif [[ ${configures[$i]} == "keyboard layout" ]];then
 			echo "backing up old keymap symbols"
 			cp -r /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/us.bak
 			echo "copying custom keymap symbols"
@@ -140,3 +167,29 @@ done
 
 echo "remember to change to zsh in /etc/passwd"
 echo "remember to set screensetup.sh and synapse on startup"
+
+
+
+# and update that shit
+for ((i=0; i<${#configures[@]-1}; i++))
+do
+	# I have no idea of how to do switch case
+	if [[ ${updates[$i]} == true ]];then
+		echo "configuring ${configures[$i]}"
+		if [[ ${configures[$i]} == "vim" ]];then
+			cp /home/$username/.vim/vimrc ./vimrc 
+		elif [[ ${configures[$i]} == "urxvt" ]];then
+			cp /home/$username/.Xdefaults ./Xdefaults 
+			cp /home/$username/.Xresources ./Xresources 
+        elif [[ ${configures[$i]} == "git" ]];then
+            echo
+		elif [[ ${configures[$i]} == "zsh" ]];then
+			cp /home/$username/.zshrc ./zshrc 
+		elif [[ ${configures[$i]} == "tmux" ]];then
+			cp /home/$username/.tmux.conf ./tmux.conf 
+		elif [[ ${configures[$i]} == "keyboard layout" ]];then
+			cp /usr/share/X11/xkb/symbols/us ./us 
+		fi
+	fi
+done
+

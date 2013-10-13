@@ -29,9 +29,9 @@ $(pmup)
 
 
 #two parralell list containing the avalable programs to install
-programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium" "arandr")
+programs=("vim" "gvim" "rxvt-unicode" "zsh" "git" "synapse" "anki" "flashplugin-nonfree" "preload" "prelink" "build-essential || $(pmin) gcc || $(pmin) make" "keepassx" "gparted" "tmux" "inconsolata" "chromium-browser || $(pmin) chomium" "arandr" "conky")
 # true indicates that it will be installed
-installs=(true true true true true true true false true true false true true true true true true)
+installs=(true true true true true true true false true true false true true true true true true true)
 
 while [ true ]
 do
@@ -64,9 +64,9 @@ done
 
 
 # same here, but with preconfigured rc files and .conf files
-configures=("vim" "urxvt" "zsh" "git" "tmux" "keyboard layout")
-customs=(true true true true true true)
-updates=(true true true true true true)
+configures=("vim" "urxvt" "zsh" "git" "tmux" "keyboard layout" "conky")
+customs=(true true true true true true true)
+updates=(true true true true true true true)
 
 while [ true ]
 do
@@ -161,14 +161,14 @@ do
 			cp -r /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/us.bak
 			echo "copying custom keymap symbols"
 			cp -r ./us /usr/share/X11/xkb/symbols/us
+        elif [[ ${configures[$i]} == "conky" ]] ;then
+            cp ./conkyrc /home/$username/.conkyrc
 		fi
 	fi
 done
 
 echo "remember to change to zsh in /etc/passwd"
 echo "remember to set screensetup.sh and synapse on startup"
-
-
 
 # and update that shit
 for ((i=0; i<${#configures[@]-1}; i++))
@@ -189,6 +189,8 @@ do
 			cp /home/$username/.tmux.conf ./tmux.conf 
 		elif [[ ${configures[$i]} == "keyboard layout" ]];then
 			cp /usr/share/X11/xkb/symbols/us ./us 
+        elif [[ ${configures[$i]} == "conky" ]]; then
+            cp /home/$username/.conkyrc ./conkyrc
 		fi
 	fi
 done

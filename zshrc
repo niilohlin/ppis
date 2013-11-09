@@ -1,30 +1,18 @@
 #!/bin/zsh
-# if [ -f /etc/bash_completion ]; then
-# 	    . /etc/bash_completion
-# fi
 
 xhost +local:root > /dev/null 2>&1
-
-# complete -cf sudo
-
-# shopt -s cdspell
-# shopt -s checkwinsize
-# shopt -s cmdhist
-# shopt -s dotglob
-# shopt -s expand_aliases
-# shopt -s extglob
-# setopt histappend
-# shopt -s hostcomplete
-# shopt -s nocaseglob
 
 echo "welcome dearest human"
 
 export HISTSIZE=10000
 export HISTFILESIZE=${HISTSIZE}
 export SAVEHIST=${HISTSIZE}
+export HISTFILE="~/.zsh_hist"
 
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
+
+export HD='/run/media/niil/8d25eb81-c066-48cd-a263-83d2b0b3308c/'
 
 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
@@ -80,8 +68,9 @@ set keymap vi-insert
 
 # prompt
 autoload -U colors && colors
-PS1="%{%F{red}%}%n%{%f%}@%{%F{blue}%}%m %{%F{yellow}%}%~ %{$%f%}%  "
-BROWSER=/usr/bin/xdg-open
+PS1="%{%F{red}%}%n%{%f%}@%{%F{blue}%}%m %{%F{yellow}%}%~ %{$%f%}%"
+
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/bin/
 [[ -z "$TMUX" ]] && exec tmux

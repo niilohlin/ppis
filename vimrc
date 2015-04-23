@@ -1,14 +1,3 @@
-runtime! archlinux.vim
-
-call pathogen#incubate()
-exe pathogen#infect()
-
-" low means that list tabs is not highlighted
-let g:solarized_visibility="low"
-colorscheme solarized
-set background=dark
-
-set guifont=inconsolata\ 18
 
 syntax enable
 syntax on
@@ -25,8 +14,7 @@ set relativenumber
 set backspace=2
 set ruler
 set showcmd
-set colorcolumn=80
-set cursorline
+"set colorcolumn=80
 set clipboard=unnamed
 set whichwrap+=<,>,[,],l,h
 
@@ -42,7 +30,7 @@ set list
 set listchars=tab:›\ 
 
 " Some remaps
-inoremap hh <Esc>
+inoremap tn <Esc>
 nnoremap v V
 nnoremap V v
 nnoremap p ]p
@@ -52,7 +40,6 @@ nnoremap P [P
 inoremap <CR> <CR>a<BS>
 nnoremap o oa<BS>
 nnoremap O Oa<BS>
-nnoremap ; :
 
 
 " Set cursor position to old spot

@@ -1,0 +1,39 @@
+
+inoremap tn <esc>
+nnoremap v V
+nnoremap V v
+
+nnoremap gd :vsc Edit.GoToDeclaration<cr>
+nnoremap gD :vsc Edit.GoToDefinition<cr>
+nnoremap gi :vsc Resharper.ReSharper_GotoImplementations<cr>
+
+nmap <C-O> :vsc View.NavigateBackward<CR>
+nmap <C-I> :vsc View.NavigateForward<CR>
+
+vnoremap = :vsc Edit.FormatSelection<cr>
+nnoremap <space>k :vsc ReSharper.Resharper_GotoUsage<cr>
+nnoremap K kJ
+
+nnoremap <space>p viwpyiwb 
+
+nnoremap / :vsc Edit.Find<cr>
+
+
+nnoremap <space>o :vsc ReSharper.ReSharper_GotoType<cr>
+nnoremap <space>dp iDebug.Print("");<esc>hh
+nnoremap <space>dr :vsc Debug.Start<cr>
+
+nnoremap <space>rn :vsc ReSharper.ReSharper_Rename<cr>
+nnoremap <space>ri :vsc ReSharper.ReSharper_InlineVariable<cr>
+nnoremap <space>re :vsc ReSharper.ReSharper_IntroduceField<cr>
+nnoremap <space>rr :vsc ReSharper.ReSharper_RefactorThis<cr>
+nnoremap <space>ds :vsc Debug.StopDebugging<cr>
+nnoremap H :vsc View.NavigateBackward<cr>
+nnoremap L :vsc View.NavigateForward<cr>
+nnoremap <space>p majmbkp'bkV'aj='aj_
+nnoremap <space>P makmbjP'akV'bj='bj_
+
+" poor mans surrond.vim
+nnoremap ds( di(hPld%
+nnoremap ds{ di{hPld%
+nnoremap ds[ di[hPld%
